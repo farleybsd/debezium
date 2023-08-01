@@ -106,7 +106,7 @@ services:
       - "CONNECT_URL=http://connect:8083"
 #Mysql 
   db:
-    image: mysql:5.7
+    image: mysql:latest
     restart: always
     environment:
       MYSQL_DATABASE: 'poc'
