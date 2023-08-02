@@ -78,7 +78,7 @@ services:
 
 # debezium connector
   connect:
-    image: debezium/connect:1.9
+    image: debezium/connect:2.4
     ports:
      - 5005:5005
     networks:
@@ -127,9 +127,25 @@ services:
       - my-db:/var/lib/mysql
     networks:
       - kafka-network
+#postgres
+  dbpost:
+    image: postgres:latest
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=db
+    ports:
+      - '5432:5432'
+    volumes: 
+      - dbpost:/var/lib/postgresql/data
+    networks:
+      - kafka-network
 # Names our volume
 volumes:
   my-db:
+  dbpost:
+    driver: local
 networks:
   kafka-network:
     driver: bridge

@@ -18,7 +18,7 @@ schema.history.internal.kafka.topic = schemahistory.fullfillment
 include.schema.changes = true 
 
 
-# Funcionando
+# Funcionando Origin
 name=MySqlConnector
 connector.class=io.debezium.connector.mysql.MySqlConnector
 tasks.max=1
@@ -28,3 +28,29 @@ database.server.name=poc
 database.history.kafka.bootstrap.servers=kafka:9092
 database.history.kafka.topic=teste
 database.password=123456
+database.server.id=1
+topic.prefix=ab
+schema.history.internal.kafka.bootstrap.servers=kafka:9092 
+schema.history.internal.kafka.topic=schemahistory.fullfillment
+
+# JDBC
+name=JdbcSinkConnector
+connector.class=io.debezium.connector.jdbc.JdbcSinkConnector
+topics=ab.poc.authors
+tasks.max=1
+connection.url=jdbc:postgresql://dbpost:5432/postgres
+connection.username=postgres 
+connection.password=postgres
+insert.mode=upsert 
+delete.enabled=true 
+primary.key.mode=record_key 
+schema.evolution=basic  
+database.time_zone=UTC 
+
+# Sql
+show databases
+ CREATE DATABASE books;
+USE books;
+CREATE TABLE authors (ID int NOT NULL, name VARCHAR(20), email VARCHAR(20),PRIMARY KEY (ID));
+mysql> SHOW TABLES;
+INSERT INTO authors (id,name,email) VALUES(1,"Vivek","xuz@abc.com");
